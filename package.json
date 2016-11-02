@@ -1,0 +1,20 @@
+{
+  "name": "melodrama-scripts",
+  "version": "0.1.0",
+  "description": "Scripts to develop presentations with spectacle",
+  "readme": "README.md",
+  "bin": {
+    "melodrama": "./index.js"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "index.js"
+  ],
+  "author": {
+    "name": "Sebastian Sebald",
+    "email": "sebastian.sebald@gmail.com"
+  },
+  "license": "MIT"
+}
