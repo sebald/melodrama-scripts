@@ -17,11 +17,11 @@ const cli = meow({
   help:
 `
   Usage
-    $ start <file> [options]
+    $ start [file] [options]
 
   Options
-    -p, --protocol    Run dev-server on custom port (Default: 3000)
-    -h, --host        Run dev-server on custom host (Default: localhost)
+    -p, --protocol    use custom port (Default: 3000)
+    -h, --host        use custom host (Default: localhost)
 
   Examples
     $ start index.js
