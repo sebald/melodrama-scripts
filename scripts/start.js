@@ -12,9 +12,12 @@ const resolveFromCwd = require('../lib/utils').resolveFromCwd;
 
 // CLI interface
 process.env.NODE_ENV = 'development';
-const cli = meow(`
+const cli = meow({
+  description: false,
+  help:
+`
   Usage
-    $ start <file>
+    $ start <file> [options]
 
   Options
     -p, --protocol    Run dev-server on custom port (Default: 3000)
@@ -22,7 +25,8 @@ const cli = meow(`
 
   Examples
     $ start index.js
-`, {
+`
+}, {
   alias: {
     p: 'protocol',
     h: 'host'
@@ -35,7 +39,7 @@ const cli = meow(`
 
 
 /**
- * (1) Check if the chosen port is available, if not go and find another one.
+ * (1) Check if chosen port is available, if not go and find another one.
  * (2) Check for the entry file.
  * (3) Finally, run the dev server.
  */
