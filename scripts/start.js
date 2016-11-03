@@ -3,22 +3,22 @@
 
 const chalk = require('chalk');
 const detect = require('detect-port');
+const emoji = require('node-emoji').get;
 const fs = require('fs-extra');
 const meow = require('meow');
-const resolvePath = require('../utils/path.utils').resolvePath;
-const runServer = require('../config/server');
-const resolveFromCwd = require('../config/paths').resolveFromCwd;
+const runServer = require('../lib/server');
+const resolveFromCwd = require('../lib/utils').resolveFromCwd;
 
 
-// Get/set enviroment
+// CLI interface
 process.env.NODE_ENV = 'development';
 const cli = meow(`
   Usage
     $ start <file>
 
   Options
-    -p, --protocol  Run dev-server on custom port (Default: 3000)
-    -h, --host      Run dev-server on custom host (Default: localhost)
+    -p, --protocol    Run dev-server on custom port (Default: 3000)
+    -h, --host        Run dev-server on custom host (Default: localhost)
 
   Examples
     $ start index.js
@@ -34,18 +34,20 @@ const cli = meow(`
 });
 
 
-// Check if the default port 3000 is available, if not
-// go and find another one. Check for the entry file.
-// Finally, run the dev server.
+/**
+ * (1) Check if the chosen port is available, if not go and find another one.
+ * (2) Check for the entry file.
+ * (3) Finally, run the dev server.
+ */
 detect(cli.flags.port).then(port => {
   if (port !== cli.flags.port) {
-    console.log(chalk.yellow(`Port ${cli.flags.port} already used, using port ${port} instead.`));
+    console.log(chalk.yellow(`${emoji('passenger_ship')}  Port ${cli.flags.port} already used, using port ${port} instead.`));
   }
 
-  const entry = resolveFromCwd(pathcli.input[0] || 'index.js');
+  const entry = resolveFromCwd(cli.input[0] || 'index.js');
   if (!fs.existsSync(entry)) {
-    console.log(chalk.red(`Missing entry file! No file at ${chalk.dim(entry)} found!`));
-    return;
+    console.log(chalk.red(`${emoji('no_entry')}  Missing entry file! No file at ${chalk.italic(entry)} found!`));
+    process.exit();
   }
 
   runServer(entry, cli.flags.host, port);

@@ -6,12 +6,12 @@
   "bin": {
     "melodrama-scripts": ".bin/melodrama-scripts.js"
   },
+  "scripts": {
+    "example": "node scripts/start example/index.js"
+  },
   "engines": {
     "node": ">=6"
   },
-  "files": [
-    "index.js"
-  ],
   "author": {
     "name": "Sebastian Sebald",
     "email": "sebastian.sebald@gmail.com"
@@ -33,7 +33,9 @@
     "json-loader": "0.5.4",
     "markdown-loader": "0.1.7",
     "meow": "3.7.0",
+    "node-emoji": "1.4.1",
     "open": "0.0.5",
+    "ora": "0.3.0",
     "pretty-bytes": "4.0.2",
     "pretty-ms": "2.1.0",
     "raw-loader": "0.5.1",
@@ -42,6 +44,8 @@
     "webpack-dev-server": "1.16.2"
   },
   "devDependencies": {
-    "eslint": "3.9.1"
+    "eslint": "3.9.1",
+    "react": "15.3.2",
+    "react-dom": "15.3.2"
   }
 }
