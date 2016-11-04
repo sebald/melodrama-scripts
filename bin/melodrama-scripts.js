@@ -2,7 +2,7 @@
 'use strict';
 
 const chalk = require('chalk');
-const spawn = require('child_process').spawn;
+const spawn = require('cross-spawn');
 const meow = require('meow');
 
 const cli = meow({
@@ -41,17 +41,18 @@ if (!/init|start/.test(script)) {
 /**
  * Parse input and execute script.
  *
- * NOTE: We can not use `execa` here, b/c it doesn't support
- *       inheriting stdio, which is required to have `inquierer``
- *       work in a child process :-(
+ * We can not use `execa` here, b/c it doesn't support
+ * inheriting stdio, which is required to have `inquierer`
+ * work in a child process.
  */
-const ps = spawn(
+const child = spawn(
   'node',
   [
     require.resolve('../scripts/' + script),
-    cli.input.join(' ')
+    cli.input.join(' '),
+    cli.flags.verbose ? '--verbose' : ''
   ],
   { stdio: 'inherit' }
 );
-ps.on('err', err => console.log(chalk.red(err)));
-ps.on('close', code => console.log(code));
+child.on('error', err => console.log(chalk.red(err)));
+child.on('close', code => process.exit(code));

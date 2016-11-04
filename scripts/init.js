@@ -3,6 +3,7 @@
 
 const chalk = require('chalk');
 const emoji = require('node-emoji').get;
+const PrettyError = require('pretty-error');
 const meow = require('meow');
 const resolveFromCwd = require('../lib/utils').resolveFromCwd;
 const { run } = require('../lib/bootstrap');
@@ -38,10 +39,14 @@ const cli = meow({
  *
  */
 run(resolveFromCwd(cli.input[0] || '.'), { verbose: cli.flags.verbose })
-  .then(() => process.exit())
+  .then(() => {
+    console.log(chalk.bold.green(`${emoji('checkered_flag')} Bootstrapping done!`));
+    process.exit();
+  })
   .catch(err => {
+    const pe = new PrettyError();
     console.log();
-    console.log(chalk.red(`${emoji('skull_and_crossbones')}  Installation failed because of the following reasons:`));
-    console.log(chalk.red(err));
+    console.log(chalk.red(`${emoji('rotating_light')} Bootstrapping failed because of the following reasons:`));
+    console.log(pe.render(err));
     process.exit();
   });
