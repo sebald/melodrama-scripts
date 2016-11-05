@@ -7,7 +7,7 @@ const emoji = require('node-emoji').get;
 const fs = require('fs-extra');
 const meow = require('meow');
 const runServer = require('../lib/server');
-const resolveFromCwd = require('../lib/utils').resolveFromCwd;
+const resolveFromCwd = require('../lib/paths').resolveFromCwd;
 
 
 // CLI interface

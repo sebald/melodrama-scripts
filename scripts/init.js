@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const emoji = require('node-emoji').get;
 const PrettyError = require('pretty-error');
 const meow = require('meow');
-const resolveFromCwd = require('../lib/utils').resolveFromCwd;
+const resolveFromCwd = require('../lib/paths').resolveFromCwd;
 const { run } = require('../lib/bootstrap');
 
 const cli = meow({
