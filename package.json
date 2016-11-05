@@ -6,6 +6,7 @@
   "bin": {
     "melodrama-scripts": ".bin/melodrama-scripts.js"
   },
+  "main": "lib/presentation.js",
   "scripts": {
     "dev:start": "node bin/melodrama-scripts start example/index.js",
     "dev:init": "node bin/melodrama-scripts init .tmp/lala"
@@ -54,7 +55,9 @@
   },
   "devDependencies": {
     "eslint": "3.9.1",
+    "eslint-plugin-react": "6.5.0",
     "react": "15.3.2",
-    "react-dom": "15.3.2"
+    "react-dom": "15.3.2",
+    "spectacle": "1.2.5"
   }
 }

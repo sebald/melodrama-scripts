@@ -1,7 +1,20 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { Slide } from 'spectacle';
+import createTheme from 'spectacle/lib/themes/default';
+import render, { Presentation } from 'melodrama';
+import External from './external';
 
-render(
-  <h1>Good day, sir!</h1>,
-  document.getElementById('root')
+const images = {};
+
+const Root = () => (
+  <Presentation theme={createTheme({})}>
+    <Slide>
+      <External/>
+    </Slide>
+    <Slide>
+      Second Slide
+    </Slide>
+  </Presentation>
 );
+
+render(Root, images);
