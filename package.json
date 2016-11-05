@@ -8,6 +8,7 @@
   },
   "main": "lib/presentation.js",
   "scripts": {
+    "test": "ava",
     "dev:start": "node bin/melodrama-scripts start example/index.js",
     "dev:init": "node bin/melodrama-scripts init .tmp/lala"
   },
@@ -54,10 +55,12 @@
     "write-pkg": "2.0.0"
   },
   "devDependencies": {
+    "ava": "0.16.0",
     "eslint": "3.9.1",
     "eslint-plugin-react": "6.5.0",
     "react": "15.3.2",
     "react-dom": "15.3.2",
-    "spectacle": "1.2.5"
+    "spectacle": "1.2.5",
+    "uuid": "2.0.3"
   }
 }
