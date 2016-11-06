@@ -19,7 +19,6 @@
     "email": "sebastian.sebald@gmail.com"
   },
   "license": "MIT",
-  "readme": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebald/melodrama-scripts.git"
