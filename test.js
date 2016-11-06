@@ -20,7 +20,7 @@ test('expose a `run` command', async t => {
   t.is(typeof run, 'function');
 });
 
-test('bootstrap directory', async t => {
+test('create package.json', async t => {
   const dir = getTmpDir();
   await bootstrapDirectory(dir);
   const pkg = fs.readJsonSync(`${dir}/package.json`);
@@ -31,6 +31,37 @@ test('bootstrap directory', async t => {
   t.is(pkg.private, true);
   t.is(pkg.readme, 'README.md');
   t.regex(pkg.scripts.start, /melodrama-scripts start/);
+});
+
+test('update package.json', async t => {
+  const dir = getTmpDir();
+  fs.outputJsonSync(path.join(dir, 'package.json'), { name: 'my-presentation', version: '0.0.1' });
+  await bootstrapDirectory(dir);
+  const pkg = fs.readJsonSync(`${dir}/package.json`);
+
+  t.is(pkg.name, 'my-presentation');
+  t.is(pkg.version, '0.0.1');
+  t.is(pkg.private, true);
+  t.is(pkg.readme, 'README.md');
+  t.regex(pkg.scripts.start, /melodrama-scripts start/);
+});
+
+test('create README', async t => {
+  const dir = getTmpDir();
+  await bootstrapDirectory(dir);
+  t.true(fs.existsSync(path.join(dir, 'README.md')));
+});
+
+test('create index template', async t => {
+  const dir = getTmpDir();
+  await bootstrapDirectory(dir);
+  t.true(fs.existsSync(path.join(dir, 'index.js')));
+});
+
+test('create gitignore', async t => {
+  const dir = getTmpDir();
+  await bootstrapDirectory(dir);
+  t.true(fs.existsSync(path.join(dir, '.gitignore')));
 });
 
 test('prepare install command', async t => {
