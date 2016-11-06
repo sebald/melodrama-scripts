@@ -2,7 +2,6 @@
   "name": "melodrama-scripts",
   "version": "0.1.0",
   "description": "Scripts to develop presentations with spectacle",
-  "readme": "README.md",
   "bin": {
     "melodrama-scripts": ".bin/melodrama-scripts.js"
   },
@@ -20,6 +19,15 @@
     "email": "sebastian.sebald@gmail.com"
   },
   "license": "MIT",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebald/melodrama-scripts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sebald/melodrama-scripts/issues"
+  },
+  "homepage": "https://github.com/sebald/melodrama-scripts#readme",
   "dependencies": {
     "babel-core": "6.18.2",
     "babel-loader": "6.2.7",
