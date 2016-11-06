@@ -29,6 +29,7 @@ test('create package.json', async t => {
   t.is(pkg.name, path.basename(dir));
   t.is(pkg.version, '1.0.0');
   t.is(pkg.private, true);
+  t.is(pkg.readme, 'README.md');
   t.regex(pkg.scripts.start, /melodrama-scripts start/);
 });
 
@@ -41,6 +42,7 @@ test('update package.json', async t => {
   t.is(pkg.name, 'my-presentation');
   t.is(pkg.version, '0.0.1');
   t.is(pkg.private, true);
+  t.is(pkg.readme, 'README.md');
   t.regex(pkg.scripts.start, /melodrama-scripts start/);
 });
 
