@@ -12,7 +12,7 @@ const cli = meow({
   ${chalk.underline('Usage:')}
     $ melodrama-scripts <command> [options]
 
-  ${chalk.underline('Usage:')}
+  ${chalk.underline('Command:')}
     init [dir]        bootstrap project dir
     start [file]      run dev server with file as entry
 
