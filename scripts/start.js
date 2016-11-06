@@ -16,10 +16,10 @@ const cli = meow({
   description: false,
   help:
 `
-  Usage
+  ${chalk.underline('Usage:')}
     $ start [file] [options]
 
-  Options
+  ${chalk.underline('Options:')}
     -p, --protocol    use custom port (Default: 3000)
     -h, --host        use custom host (Default: localhost)
 
