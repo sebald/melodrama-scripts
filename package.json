@@ -8,8 +8,9 @@
   "main": "lib/presentation.js",
   "scripts": {
     "test": "ava",
+    "dev:init": "node bin/melodrama-scripts init .tmp/example-init",
     "dev:start": "node bin/melodrama-scripts start example/index.js",
-    "dev:init": "node bin/melodrama-scripts init .tmp/lala"
+    "dev:build": "node bin/melodrama-scripts build example/index.js"
   },
   "engines": {
     "node": ">=6"
@@ -36,7 +37,6 @@
     "case-sensitive-paths-webpack-plugin": "1.1.4",
     "chalk": "1.1.3",
     "command-exists": "1.0.2",
-    "cross-spawn": "^5.0.0",
     "css-loader": "0.25.0",
     "detect-port": "1.0.5",
     "execa": "0.5.0",
@@ -47,9 +47,9 @@
     "html-webpack-plugin": "2.24.1",
     "inquirer": "1.2.2",
     "json-loader": "0.5.4",
+    "log-symbols": "1.0.2",
     "markdown-loader": "0.1.7",
     "meow": "3.7.0",
-    "node-emoji": "1.4.1",
     "open": "0.0.5",
     "ora": "0.3.0",
     "pretty-bytes": "4.0.2",

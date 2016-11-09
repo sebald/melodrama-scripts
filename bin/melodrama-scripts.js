@@ -2,8 +2,8 @@
 'use strict';
 
 const chalk = require('chalk');
-const spawn = require('cross-spawn');
 const meow = require('meow');
+const lib = require('../lib');
 
 const cli = meow({
   description: false,
@@ -12,47 +12,37 @@ const cli = meow({
   ${chalk.underline('Usage:')}
     $ melodrama-scripts <command> [options]
 
-  ${chalk.underline('Command:')}
+  ${chalk.underline('Commands:')}
     init [dir]        bootstrap project dir
-    start [file]      run dev server with file as entry
+    start <file>      run dev server with file as entry
 
   ${chalk.underline('Options:')}
+    -p, --protocol    use custom port (Default: 3000)
+    -h, --host        use custom host (Default: localhost)
     -h, --help        output usage information
     -v, --version     output the version number
     --verbose         print logs while executing command
 `
 }, {
   alias: {
-    v: 'version'
+    v: 'version',
+    p: 'protocol',
+    h: 'host'
   },
-  boolean: ['help', 'verbose', 'version']
+  default: {
+    port: 3000,
+    host: 'localhost'
+  },
+  boolean: ['help', 'verbose', 'version'],
+  string: ['protocol', 'host']
 });
 
-
-/**
- * Validate input.
- */
 const script = cli.input.shift();
-if (!/init|start/.test(script)) {
+const command = lib[script];
+// Check if requested script is known.
+if (!command) {
   console.log(chalk.bold(`Unknown script "${script}".`));
   process.exit();
 }
-
-/**
- * Parse input and execute script.
- *
- * We can not use `execa` here, b/c it doesn't support
- * inheriting stdio, which is required to have `inquierer`
- * work in a child process.
- */
-const child = spawn(
-  'node',
-  [
-    require.resolve('../scripts/' + script),
-    cli.input.join(' '),
-    cli.flags.verbose ? '--verbose' : ''
-  ],
-  { stdio: 'inherit' }
-);
-child.on('error', err => console.log(chalk.red(err)));
-child.on('close', code => process.exit(code));
+// Invoke script with input and flags.
+command(cli.input[0], cli.flags);
