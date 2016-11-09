@@ -4,7 +4,9 @@ import createTheme from 'spectacle/lib/themes/default';
 import render, { Presentation } from 'melodrama';
 import External from './external';
 
-const images = {};
+const images = {
+  nyan: require('./assets/nyancat.gif')
+};
 
 const Root = () => (
   <Presentation theme={createTheme({})}>
@@ -14,6 +16,7 @@ const Root = () => (
     <Slide>
       Second Slide
     </Slide>
+    <Slide bgImage={images.nyan}></Slide>
   </Presentation>
 );
 
