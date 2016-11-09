@@ -5,7 +5,7 @@ import render, { Presentation } from 'melodrama';
 import External from './external';
 
 const images = {
-  nyan: require('./assets/nyancat.gif')
+  nyan: require('./nyancat.gif')
 };
 
 const Root = () => (
@@ -17,6 +17,7 @@ const Root = () => (
       Second Slide
     </Slide>
     <Slide bgImage={images.nyan}></Slide>
+    <Slide>The End</Slide>
   </Presentation>
 );
 
