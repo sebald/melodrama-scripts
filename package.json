@@ -6,6 +6,13 @@
     "melodrama-scripts": "./bin/melodrama-scripts.js"
   },
   "main": "lib/presentation.js",
+  "files": [
+    "bin",
+    "lib",
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "ava",
     "dev:init": "node bin/melodrama-scripts init .tmp/example-init",
