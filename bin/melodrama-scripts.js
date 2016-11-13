@@ -15,6 +15,7 @@ const cli = meow({
   ${chalk.underline('Commands:')}
     init [dir]        bootstrap project dir
     start <file>      run dev server with file as entry
+    build <file>      build with file as entry
 
   ${chalk.underline('Options:')}
     -p, --protocol    use custom port (Default: 3000)
