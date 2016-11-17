@@ -14,7 +14,8 @@
     "README.md"
   ],
   "scripts": {
-    "test": "ava",
+    "test": "nyc ava",
+    "report": "./node_modules/.bin/nyc report --reporter=html",
     "dev:init": "node bin/melodrama-scripts init .tmp/example-init",
     "dev:start": "node bin/melodrama-scripts start example/index.js",
     "dev:build": "node bin/melodrama-scripts build example/index.js"
@@ -35,6 +36,14 @@
     "url": "https://github.com/sebald/melodrama-scripts/issues"
   },
   "homepage": "https://github.com/sebald/melodrama-scripts#readme",
+  "ava": {
+    "source": [
+      "lib/*.js"
+    ],
+    "babel": {
+      "presets": ["es2015", "react", "stage-0"]
+    }
+  },
   "dependencies": {
     "babel-core": "6.18.2",
     "babel-loader": "6.2.7",
@@ -73,6 +82,7 @@
     "ava": "0.16.0",
     "eslint": "3.9.1",
     "eslint-plugin-react": "6.5.0",
+    "nyc": "9.0.1",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "spectacle": "1.2.5",
