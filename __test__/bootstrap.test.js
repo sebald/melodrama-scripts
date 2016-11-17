@@ -6,9 +6,9 @@ import {
   run,
   bootstrapDirectory,
   prepareInstallCommand,
-  prepareDependencies } from './lib/bootstrap.js';
+  prepareDependencies } from '../lib/bootstrap.js';
 
-const testDir = path.resolve(process.cwd(), '.tmp/test');
+const testDir = path.resolve('..', '.tmp/test');
 const getTmpDir = () => path.resolve(testDir, v4());
 
 test.before('clean up temporary directory', () => {
