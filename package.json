@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "nyc ava",
-    "report": "./node_modules/.bin/nyc report --reporter=html",
+    "cover": "./node_modules/.bin/nyc report --reporter=html",
     "dev:init": "node bin/melodrama-scripts init .tmp/example-init",
     "dev:start": "node bin/melodrama-scripts start example/index.js",
     "dev:build": "node bin/melodrama-scripts build example/index.js"
@@ -41,7 +41,11 @@
       "lib/*.js"
     ],
     "babel": {
-      "presets": ["es2015", "react", "stage-0"]
+      "presets": [
+        "es2015",
+        "react",
+        "stage-0"
+      ]
     }
   },
   "dependencies": {
@@ -83,8 +87,10 @@
     "eslint": "3.9.1",
     "eslint-plugin-react": "6.5.0",
     "nyc": "9.0.1",
+    "proxyquire": "1.7.10",
     "react": "15.3.2",
     "react-dom": "15.3.2",
+    "sinon": "1.17.6",
     "spectacle": "1.2.5",
     "uuid": "2.0.3"
   }

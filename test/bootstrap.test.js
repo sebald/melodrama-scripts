@@ -1,12 +1,9 @@
 import test from 'ava';
+import sinon from 'sinon';
+import proxyquire from 'proxyquire';
 import path from 'path';
 import fs from 'fs-extra';
 import { v4 } from 'uuid';
-import {
-  run,
-  bootstrapDirectory,
-  prepareInstallCommand,
-  prepareDependencies } from '../lib/bootstrap.js';
 
 const testDir = path.resolve('..', '.tmp/test');
 const getTmpDir = () => path.resolve(testDir, v4());
@@ -15,12 +12,67 @@ test.before('clean up temporary directory', () => {
   fs.removeSync(testDir);
 });
 
-// Just a smoke test...
+test.beforeEach('proxy all the things', t => {
+  t.context.request = sinon.stub();
+  t.context.spinner = {
+    succeed: sinon.stub(),
+    fail: sinon.stub()
+  };
+  t.context.oraStart = sinon.stub().returns(t.context.spinner);
+
+  t.context.lib = proxyquire('../lib/bootstrap.js', {
+    ora: () => ({ start: t.context.oraStart }),
+    got: t.context.request.returns(Promise.resolve({
+      body: {
+        results: [{
+          package: { name:'spectacle-theme-unicorn' }
+        }]
+      }
+    }))
+  });
+});
+
 test('expose a `run` command', async t => {
-  t.is(typeof run, 'function');
+  // Just a smoke test...
+  t.is(typeof t.context.lib.run, 'function');
+});
+
+test('fetch themes', async t => {
+  const { fetchSpectacleThemes } = t.context.lib;
+  const { oraStart, spinner, request } = t.context;
+
+  const success = await fetchSpectacleThemes();
+  t.deepEqual(success, ['none', 'unicorn']);
+  t.true(oraStart.calledOnce);
+  t.true(spinner.succeed.called);
+  t.truthy(spinner.text);
+
+  request.returns(Promise.reject());
+  const fail = await fetchSpectacleThemes();
+  t.deepEqual(fail, ['none']);
+  t.true(oraStart.calledTwice);
+  t.true(spinner.fail.called);
+  t.truthy(spinner.text);
+});
+
+test('install spinner', async t => {
+  const { createInstallSpinner } = t.context.lib;
+  const { oraStart, spinner } = t.context;
+
+  await createInstallSpinner(Promise.resolve());
+  t.true(oraStart.calledOnce);
+  t.true(spinner.succeed.called);
+  t.truthy(spinner.text);
+
+  const err = await t.throws(createInstallSpinner(Promise.reject('whoops')));
+  t.true(oraStart.calledTwice);
+  t.true(spinner.fail.called);
+  t.truthy(spinner.text);
+  t.is(err, 'whoops');
 });
 
 test('create package.json', async t => {
+  const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
   await bootstrapDirectory(dir);
   const pkg = fs.readJsonSync(`${dir}/package.json`);
@@ -34,6 +86,7 @@ test('create package.json', async t => {
 });
 
 test('update package.json', async t => {
+  const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
   fs.outputJsonSync(path.join(dir, 'package.json'), { name: 'my-presentation', version: '0.0.1' });
   await bootstrapDirectory(dir);
@@ -47,24 +100,28 @@ test('update package.json', async t => {
 });
 
 test('create README', async t => {
+  const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
   await bootstrapDirectory(dir);
   t.true(fs.existsSync(path.join(dir, 'README.md')));
 });
 
 test('create index template', async t => {
+  const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
   await bootstrapDirectory(dir);
   t.true(fs.existsSync(path.join(dir, 'index.js')));
 });
 
 test('create gitignore', async t => {
+  const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
   await bootstrapDirectory(dir);
   t.true(fs.existsSync(path.join(dir, '.gitignore')));
 });
 
 test('prepare install command', async t => {
+  const { prepareInstallCommand } = t.context.lib;
   const {cmd, args} = await prepareInstallCommand();
 
   t.regex(cmd, /yarn|npm/);
@@ -73,6 +130,7 @@ test('prepare install command', async t => {
 });
 
 test('prepare dependencies (no syntax)', t => {
+  const { prepareDependencies } = t.context.lib;
   let dependencies = prepareDependencies({ syntax: false });
 
   t.true(dependencies.indexOf('react') >= 0);
@@ -82,6 +140,7 @@ test('prepare dependencies (no syntax)', t => {
 });
 
 test('prepare dependencies (with syntax)', t => {
+  const { prepareDependencies } = t.context.lib;
   let dependencies = prepareDependencies({ syntax: true });
 
   t.true(dependencies.indexOf('react') >= 0);
@@ -91,6 +150,7 @@ test('prepare dependencies (with syntax)', t => {
 });
 
 test('prepare dependencies (with theme)', t => {
+  const { prepareDependencies } = t.context.lib;
   let dependencies = prepareDependencies({ syntax: true, theme: 'foo' });
 
   t.true(dependencies.indexOf('react') >= 0);
