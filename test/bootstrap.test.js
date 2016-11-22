@@ -3,10 +3,7 @@ import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 import path from 'path';
 import fs from 'fs-extra';
-import { v4 } from 'uuid';
-
-const testDir = path.resolve('..', '.tmp/test');
-const getTmpDir = () => path.resolve(testDir, v4());
+import { testDir, getTmpDir } from './_utils';
 
 test.before('clean up temporary directory', () => {
   fs.removeSync(testDir);
@@ -20,7 +17,7 @@ test.beforeEach('proxy all the things', t => {
   };
   t.context.oraStart = sinon.stub().returns(t.context.spinner);
 
-  t.context.lib = proxyquire('../lib/bootstrap.js', {
+  t.context.lib = proxyquire('../lib/bootstrap', {
     ora: () => ({ start: t.context.oraStart }),
     got: t.context.request.returns(Promise.resolve({
       body: {

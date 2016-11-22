@@ -40,13 +40,16 @@
     "source": [
       "lib/*.js"
     ],
-    "babel": {
-      "presets": [
-        "es2015",
-        "react",
-        "stage-0"
-      ]
-    }
+    "require": [
+      "babel-register"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
   },
   "dependencies": {
     "babel-core": "6.18.2",
@@ -83,7 +86,8 @@
     "write-pkg": "2.0.0"
   },
   "devDependencies": {
-    "ava": "0.16.0",
+    "ava": "^0.16.0",
+    "babel-register": "6.18.0",
     "eslint": "3.9.1",
     "eslint-plugin-react": "6.5.0",
     "nyc": "9.0.1",
