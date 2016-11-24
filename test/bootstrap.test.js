@@ -80,6 +80,7 @@ test('create package.json', async t => {
   t.is(pkg.private, true);
   t.is(pkg.readme, 'README.md');
   t.regex(pkg.scripts.start, /melodrama-scripts start/);
+  t.regex(pkg.scripts.build, /melodrama-scripts build/);
 });
 
 test('update package.json', async t => {
