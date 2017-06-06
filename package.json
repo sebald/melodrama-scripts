@@ -1,6 +1,6 @@
 {
   "name": "melodrama-scripts",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Scripts to create a presentations with Spectacle",
   "bin": {
     "melodrama-scripts": "./bin/melodrama-scripts.js"
