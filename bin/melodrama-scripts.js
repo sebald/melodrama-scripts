@@ -18,6 +18,7 @@ const cli = meow({
     build <file>      build with file as entry
 
   ${chalk.underline('Options:')}
+    -i, --include     directory to include
     -p, --protocol    use custom port (Default: 3000)
     -h, --host        use custom host (Default: localhost)
     -h, --help        output usage information
@@ -28,14 +29,16 @@ const cli = meow({
   alias: {
     v: 'version',
     p: 'protocol',
-    h: 'host'
+    h: 'host',
+    i: 'include'
   },
   default: {
     port: 3000,
-    host: 'localhost'
+    host: 'localhost',
+    include: './assets'
   },
   boolean: ['help', 'verbose', 'version'],
-  string: ['protocol', 'host']
+  string: ['protocol', 'host', 'include']
 });
 
 const script = cli.input.shift();
