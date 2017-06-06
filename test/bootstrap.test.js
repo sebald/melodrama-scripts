@@ -111,6 +111,13 @@ test('create index template', async t => {
   t.true(fs.existsSync(path.join(dir, 'index.js')));
 });
 
+test('create assets folder', async t => {
+  const { bootstrapDirectory } = t.context.lib;
+  const dir = getTmpDir();
+  await bootstrapDirectory(dir);
+  t.true(fs.existsSync(path.join(dir, 'assets')));
+});
+
 test('create gitignore', async t => {
   const { bootstrapDirectory } = t.context.lib;
   const dir = getTmpDir();
